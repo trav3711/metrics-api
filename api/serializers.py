@@ -4,9 +4,10 @@ from django.contrib.auth.models import User
 
 
 class MetricSerializer(serializers.ModelSerializer):
+    owner = serializers.ReadOnlyField(source='owner.username')
     class Meta:
         model = Metric
-        fields = ['id', 'metric_name', 'user']
+        fields = ['id', 'metric_name', 'owner']
 
 class EntrySerializer(serializers.ModelSerializer):
     class Meta:
