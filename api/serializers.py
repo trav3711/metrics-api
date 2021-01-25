@@ -12,7 +12,7 @@ class MetricSerializer(serializers.ModelSerializer):
 class EntrySerializer(serializers.ModelSerializer):
     class Meta:
         model = Entry
-        fields = ['metric', 'user', 'quantity', 'entry_time']
+        fields = ['id', 'metric', 'owner', 'quantity', 'entry_time']
 
 class UserSerializer(serializers.ModelSerializer):
     metrics = serializers.PrimaryKeyRelatedField(many=True, queryset=Metric.objects.all())

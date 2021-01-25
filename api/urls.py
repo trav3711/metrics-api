@@ -1,12 +1,20 @@
-from django.urls import path
-from rest_framework.urlpatterns import format_suffix_patterns
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
 from api import views
 
-urlpatterns = [
-    path('metrics/', views.MetricsList.as_view()),
-    path('metrics/detail/<int:pk>/', views.MetricDetail.as_view()),
-    path('users/', views.UserList.as_view()),
-    path('users/<int:pk>/', views.UserDetail.as_view()),
-]
+entry_list = views.EntryViewSet.as_view({
+    'get': 'list',
+    'post': 'create'
+})
 
-urlpatterns = format_suffix_patterns(urlpatterns)
+# Create a router and register our viewsets with it.
+router = DefaultRouter()
+router.register(r'metrics', views.MetricViewSet, 'get_queryset')
+#router.register(r'entries', views.EntryViewSet, 'get_queryset')
+router.register(r'users', views.UserViewSet)
+
+# The API URLs are now determined automatically by the router.
+urlpatterns = [
+    path('metrics/<int:pk>/entries/', entry_list, name='entry-list'),
+    path('', include(router.urls)),
+]

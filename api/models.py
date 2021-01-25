@@ -18,7 +18,7 @@ class Metric(models.Model):
 
 class Entry(models.Model):
     metric = models.ForeignKey(Metric, related_name='entries', on_delete=models.CASCADE)
-    #owner = models.ForeignKey('auth.User', related_name='entries', on_delete=models.CASCADE)
+    owner = models.ForeignKey('auth.User', related_name='entries', default="", on_delete=models.CASCADE)
     quantity = models.IntegerField()
     entry_time = models.DateTimeField('Entry Time', auto_now=True)
     class Meta:
