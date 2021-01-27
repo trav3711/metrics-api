@@ -1,5 +1,5 @@
-from api.models import Metric, Entry
 from django.contrib.auth.models import User
+from api.models import Metric, Entry
 from api.serializers import MetricSerializer, EntrySerializer, UserSerializer
 from api.permissions import IsOwnerOrReadOnly
 
@@ -8,6 +8,7 @@ from rest_framework import viewsets
 from rest_framework.decorators import action
 from django.views.decorators.csrf import csrf_protect
 from rest_framework.response import Response
+from rest_flex_fields import is_expanded
 
 class MetricViewSet(viewsets.ModelViewSet):
     #queryset = Metric.objects.all()
@@ -16,7 +17,12 @@ class MetricViewSet(viewsets.ModelViewSet):
                             IsOwnerOrReadOnly]
 
     def get_queryset(self):
-        return Metric.objects.filter(owner=self.request.user.id)
+        queryset =  Metric.objects.filter(owner=self.request.user.id)
+
+        if is_expanded(self.request, 'entries'):
+            queryset = queryset.prefetch_related('entries')
+
+        return queryset
 
     def perform_create(self, serializer):
         """
@@ -42,9 +48,13 @@ class EntryViewSet(viewsets.ModelViewSet):
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
     def perform_create(self, serializer, metric):
+        """
+        Binds an Entry to a Metricd when created
+        """
         serializer.save(metric=metric,
                         owner=self.request.user)
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    permission_classes = [permissions.IsAdminUser]
