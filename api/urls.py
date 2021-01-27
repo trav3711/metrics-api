@@ -17,8 +17,6 @@ router.register(r'users', views.UserViewSet)
 
 # The API URLs are now determined automatically by the router.
 urlpatterns = [
-    path('token/', views.MyObtainTokenPairView.as_view(), name='token_obtain_pair'),
-    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('metrics/<int:pk>/entries/', entry_list, name='entry-list'),
     path('', include(router.urls)),
 ]

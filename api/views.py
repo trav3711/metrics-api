@@ -8,13 +8,7 @@ from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_flex_fields import is_expanded
-from rest_framework_simplejwt.views import TokenObtainPairView
-
-from .serializers import MyTokenObtainPairSerializer
-
-class MyObtainTokenPairView(TokenObtainPairView):
-    permission_classes = [permissions.AllowAny]
-    serializer_class = MyTokenObtainPairSerializer
+#from rest_framework_simplejwt.views import TokenObtainPairView
 
 class MetricViewSet(viewsets.ModelViewSet):
     #queryset = Metric.objects.all()

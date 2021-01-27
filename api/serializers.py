@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from rest_flex_fields import FlexFieldsModelSerializer
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 from api.models import Metric, Entry
 from django.contrib.auth.models import User
@@ -34,13 +33,3 @@ class UserSerializer(serializers.ModelSerializer):
 
     #def get_days_since_joined(self, obj):
     #    return (now() - obj.date_joined).days
-
-class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
-
-    @classmethod
-    def get_token(cls, user):
-        token = super(MyTokenObtainPairSerializer, cls).get_token(user)
-
-        # Add custom claims
-        token['username'] = user.username
-        return token
