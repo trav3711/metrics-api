@@ -1,20 +1,25 @@
 from django.contrib.auth.models import User
 from api.models import Metric, Entry
 from api.serializers import MetricSerializer, EntrySerializer, UserSerializer
-from api.permissions import IsOwnerOrReadOnly
+#from api.permissions import IsOwnerOrReadOnly
 
 from rest_framework import generics, permissions, status
 from rest_framework import viewsets
 from rest_framework.decorators import action
-from django.views.decorators.csrf import csrf_protect
 from rest_framework.response import Response
 from rest_flex_fields import is_expanded
+from rest_framework_simplejwt.views import TokenObtainPairView
+
+from .serializers import MyTokenObtainPairSerializer
+
+class MyObtainTokenPairView(TokenObtainPairView):
+    permission_classes = [permissions.AllowAny]
+    serializer_class = MyTokenObtainPairSerializer
 
 class MetricViewSet(viewsets.ModelViewSet):
     #queryset = Metric.objects.all()
     serializer_class = MetricSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly,
-                            IsOwnerOrReadOnly]
+    permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         queryset =  Metric.objects.filter(owner=self.request.user.id)
@@ -32,8 +37,7 @@ class MetricViewSet(viewsets.ModelViewSet):
 
 class EntryViewSet(viewsets.ModelViewSet):
     serializer_class = EntrySerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly,
-                            IsOwnerOrReadOnly]
+    permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         return Entry.objects.filter(owner = self.request.user.id,
