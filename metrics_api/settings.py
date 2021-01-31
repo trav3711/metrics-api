@@ -14,9 +14,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = '${_self.DEBUG}'
+DEBUG = os.environ.get('DEBUG')
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS')
 
 # CORS_ORIGIN_ALLOW_ALL = True
 #CORS_ORIGIN_WHITELIST =os.environ.get("CORS_ORIGIN_WHITELIST").split(" ")
@@ -84,11 +84,11 @@ WSGI_APPLICATION = 'metrics_api.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': '${_self.DATABASE_NAME}',
-        'USER': '${_self.DATABASE_USERNAME}',
-        'PASSWORD': '${_self.DATABASE_PASSWORD}',
-        'HOST': os.environ.get(${_self.DATABASE_HOST}),
-        'PORT': '5432',
+        'NAME': os.environ.get('DATABASE_NAME'),
+        'USER': os.environ.get('DATABASE_USERNAME'),
+        'PASSWORD': os.environ.get('DATABASE_PASSWORD'),
+        'HOST': os.environ.get('DATABASE_HOST'),
+        'PORT': os.environ.get('DATABASE_PORT'),
     }
 }
 
