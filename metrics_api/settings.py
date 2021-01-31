@@ -88,7 +88,7 @@ DATABASES = {
         'USER': '${_self.DATABASE_USERNAME}',
         'PASSWORD': '${_self.DATABASE_PASSWORD}',
         'HOST': '${_self.DATABASE_HOST}',
-        'PORT': '${_self.DATABASE_PORT}'
+        'PORT': '5432',
     }
 }
 
