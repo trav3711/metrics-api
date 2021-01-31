@@ -87,7 +87,7 @@ DATABASES = {
         'NAME': '${_self.DATABASE_NAME}',
         'USER': '${_self.DATABASE_USERNAME}',
         'PASSWORD': '${_self.DATABASE_PASSWORD}',
-        'HOST': '${_self.DATABASE_HOST}',
+        'HOST': os.environ.get(${_self.DATABASE_HOST}),
         'PORT': '5432',
     }
 }
