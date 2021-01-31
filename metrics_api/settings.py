@@ -16,7 +16,7 @@ SECRET_KEY = '${metrics-api.DJANGO_SECRET_KEY}'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', False)
 
-ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', '127.0.0.1').split(',')
+ALLOWED_HOSTS = ('${_self.DJANGO_ALLOWED_HOSTS}', '127.0.0.1').split(',')
 
 # CORS_ORIGIN_ALLOW_ALL = True
 #CORS_ORIGIN_WHITELIST =os.environ.get("CORS_ORIGIN_WHITELIST").split(" ")
@@ -84,13 +84,13 @@ WSGI_APPLICATION = 'metrics_api.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.{}'.format(
-             os.getenv('DATABASE_ENGINE', 'postgresql')
+             '${_self.DATABASE_ENGINE}'
         ),
-        'NAME': os.getenv('DATABASE_NAME'),
-        'USER': os.getenv('DATABASE_NAME'),
-        'PASSWORD': os.getenv('DATABASE_PASSWORD'),
-        'HOST': os.getenv('DATABASE_HOST', 'ziggy.db.elephantsql.com'),
-        'PORT': os.getenv('DATABASE_PORT', '5432')
+        'NAME': '${_self.DATABASE_NAME}',
+        'USER': '${_self.DATABASE_USERNAME}',
+        'PASSWORD': '${_self.DATABASE_PASSWORD}',
+        'HOST': '${_self.DATABASE_HOST}',
+        'PORT': '${_self.DATABASE_PORT}'
     }
 }
 
