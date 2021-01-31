@@ -14,9 +14,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = '${metrics-api.DJANGO_SECRET_KEY}'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG', False)
+DEBUG = '${_self.DEBUG}'
 
-ALLOWED_HOSTS = ('${_self.DJANGO_ALLOWED_HOSTS}', '127.0.0.1').split(',')
+ALLOWED_HOSTS = ['*']
 
 # CORS_ORIGIN_ALLOW_ALL = True
 #CORS_ORIGIN_WHITELIST =os.environ.get("CORS_ORIGIN_WHITELIST").split(" ")
