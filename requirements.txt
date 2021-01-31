@@ -3,4 +3,3 @@ djangorestframework
 psycopg2
 drf-flex-fields
 djangorestframework-simplejwt
-django-environ
