@@ -90,8 +90,7 @@ WSGI_APPLICATION = 'metrics_api.wsgi.application'
 
 DATABASES = {
      'default': {
-         'ENGINE': 'django.db.backends.{}'.format(
-             os.getenv('DATABASE_ENGINE', 'postgresql')
+         'ENGINE': os.getenv('DATABASE_ENGINE')
          ),
          'NAME': os.getenv('DATABASE_NAME', 'polls'),
          'USER': os.getenv('DATABASE_USERNAME', 'myprojectuser'),
