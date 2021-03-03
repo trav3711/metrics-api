@@ -1,6 +1,7 @@
 django
 djangorestframework
-psycopg2
+psycopg2-binary
 drf-flex-fields
 djangorestframework-simplejwt
-gunircorn
+django-cors-headers
+gunicorn==19.9.0
