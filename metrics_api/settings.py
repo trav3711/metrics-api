@@ -11,11 +11,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'travis12345')
 #print(SECRET_KEY)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG', False)
+DEBUG = os.getenv('DEBUG', True)
 
 ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', '127.0.0.1').split(',')
 
@@ -39,8 +39,8 @@ SIMPLE_JWT = {
 }
 
 INSTALLED_APPS = [
-    'corsheaders',
     'rest_framework',
+    'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -63,7 +63,6 @@ MIDDLEWARE = [
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
-
 ROOT_URLCONF = 'metrics_api.urls'
 
 TEMPLATES = [
@@ -90,17 +89,14 @@ WSGI_APPLICATION = 'metrics_api.wsgi.application'
 
 DATABASES = {
      'default': {
-         'ENGINE': os.getenv('DATABASE_ENGINE')
-         ),
-         'NAME': os.getenv('DATABASE_NAME', 'polls'),
-         'USER': os.getenv('DATABASE_USERNAME', 'myprojectuser'),
-         'PASSWORD': os.getenv('DATABASE_PASSWORD', 'password'),
+         'ENGINE': os.getenv('DATABASE_ENGINE', 'postgres'),
+         'NAME': os.getenv('DATABASE_NAME', 'mymetrics'),
+         'USER': os.getenv('DATABASE_USERNAME', 'user'),
+         'PASSWORD': os.getenv('DATABASE_PASSWORD', ''),
          'HOST': os.getenv('DATABASE_HOST', '127.0.0.1'),
          'PORT': os.getenv('DATABASE_PORT', 5432)
      }
  }
-
-PASSWORD_HASHERS = (
     'django.contrib.auth.hashers.MD5PasswordHasher',
 )
 
