@@ -89,14 +89,15 @@ WSGI_APPLICATION = 'metrics_api.wsgi.application'
 
 DATABASES = {
      'default': {
-         'ENGINE': os.getenv('DATABASE_ENGINE', 'postgres'),
+         'ENGINE': os.getenv('DATABASE_ENGINE', 'django.db.backends.postgresql'),
          'NAME': os.getenv('DATABASE_NAME', 'mymetrics'),
-         'USER': os.getenv('DATABASE_USERNAME', 'user'),
+         'USER': os.getenv('DATABASE_USERNAME', 'travis'),
          'PASSWORD': os.getenv('DATABASE_PASSWORD', ''),
          'HOST': os.getenv('DATABASE_HOST', '127.0.0.1'),
          'PORT': os.getenv('DATABASE_PORT', 5432)
      }
- }
+}
+PASSWORD_HASHERS = (
     'django.contrib.auth.hashers.MD5PasswordHasher',
 )
 
