@@ -4,5 +4,6 @@ auth/migrations
 api/migrations
 auth/__pycache__
 api/__pycache__
+metrics_api/__pycache__
 env
 venv
