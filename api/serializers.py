@@ -1,24 +1,26 @@
 from rest_framework import serializers
-from rest_flex_fields import FlexFieldsModelSerializer
 
 from api.models import Metric, Entry
 from django.contrib.auth.models import User
 
 
-class EntrySerializer(FlexFieldsModelSerializer):
+class EntrySerializer(serializers.ModelSerializer):
     class Meta:
         model = Entry
         fields = ['id', 'metric', 'owner', 'quantity', 'entry_time']
 
-class MetricSerializer(FlexFieldsModelSerializer):
+class MetricCreateSerializer(serializers.ModelSerializer):
+    owner = serializers.ReadOnlyField(source='owner.username')
+    class Meta:
+        model = Metric
+        fields = ['id', 'metric_name', 'owner', 'created_at']
+
+class MetricSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
     entries = serializers.PrimaryKeyRelatedField(many=True, queryset=Entry.objects.all())
     class Meta:
         model = Metric
-        fields = ['id', 'metric_name', 'owner', 'entries']
-        expandable_fields = {
-            'entries': (EntrySerializer, {'many': True})
-        }
+        fields = ['id', 'metric_name', 'owner', 'created_at', 'entries']
 
 class UserSerializer(serializers.ModelSerializer):
     metrics = serializers.PrimaryKeyRelatedField(many=True, queryset=Metric.objects.all())
@@ -27,9 +29,3 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = '__all__'
-        expandable_fields = {
-            'metrics': (MetricSerializer, {'many': True})
-        }
-
-    #def get_days_since_joined(self, obj):
-    #    return (now() - obj.date_joined).days
